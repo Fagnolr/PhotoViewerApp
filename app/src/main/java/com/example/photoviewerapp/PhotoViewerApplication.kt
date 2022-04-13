@@ -1,4 +1,8 @@
 package com.example.photoviewerapp
 
-class PhotoViewerApplication {
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
+@HiltAndroidApp
+class PhotoViewerApplication : Application() {
 }
