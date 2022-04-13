@@ -1,9 +1,6 @@
 package com.example.photoviewerapp.presentation.album_list
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -32,15 +29,19 @@ fun AlbumListScreen(
         state = rememberSwipeRefreshState(isRefreshing = viewModel.state.value.isRefreshing),
         onRefresh = { viewModel.getAlbums(isRefreshing = true) }) {
         Box(modifier = Modifier.fillMaxSize()) {
-
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.albums) { album ->
-                    AlbumListItem(
-                        album = album,
-                        onItemClick = {
-                            navController.navigate(Screen.PhotoListScreen.route + "/${album.id}")
-                        }
-                    )
+            state.albums?.let { album ->
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(5.dp)
+                ) {
+                    items(album) { album ->
+                        AlbumListItem(
+                            album = album,
+                            onItemClick = {
+                                navController.navigate(Screen.PhotoListScreen.route + "/${album.id}")
+                            }
+                        )
+                    }
                 }
             }
             if (state.error.isNotBlank()) {
